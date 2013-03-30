@@ -3,4 +3,4 @@ RewriteEngine On
 RewriteRule ^(.*?)/$ $1/index.html [QSA]
 RewriteRule ^(.*)\.html$ /core/core.php?stringjustforcore=$1  [QSA]
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
-AddDefaultCharset UTF-8
+AddDefaultCharset UTF-822
