@@ -1,0 +1,70 @@
+<div class="nav_slider">
+	<a class="nav_slider_left"></a>
+	<div class="photo_nav_slider">
+		<div class="list">
+		% render(command/command, command) %
+		%repeat 10%
+		<a class="nouse" href='#'><img src="%tfold%/images/cs.png"/></a>
+		%end%
+		</div>
+
+	</div>
+	<a class="nav_slider_right"></a>
+	<div class="team_preview">
+		<a id="pr_link" href="#"> <img id="pr_img" src=""/> <span id="pr_text"></span> </a>
+	</div>
+</div>
+<div class="employee_info">
+	<div class="employee_bg">
+		<div class="photo_block" style="background-image: url(/files/command/%bg%);"></div>
+		<div class="bookmark_about">
+			<div class="icon_about icon_1"></div>
+			<div class="info_block_wrap active_block">
+				<div class="info_block_overflow">
+					<div class="com_info_block ">
+						<a class="com_info_block_title" href="">%name% %surname%</a>
+						<p class="post">
+							%state%
+						</p>
+						<div class="com_info_block_text">
+							%about%
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bookmark_hobbie">
+			<div class="icon_1 icon_hobbie" id="p1"></div>
+			<div class="info_block_wrap">
+				<div class="info_block_overflow">
+					<div class="com_info_block">
+						<a class="com_info_block_title" href="">%name% %surname%</a>
+						<p class="post">
+							%state%
+						</p>
+						<div class="com_info_block_text">
+							%hobbie%
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="bookmark_skills">
+			<div class="icon_1 icon_skills" id="p2"></div>
+			<div class="info_block_wrap">
+				<div class="info_block_overflow">
+					<div class="com_info_block">
+						<a class="com_info_block_title" href="">%name% %surname%</a>
+						<p class="post">
+							%state%
+						</p>
+						<div class="com_info_block_text">
+							%skills%
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

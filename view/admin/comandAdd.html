@@ -1,0 +1,80 @@
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2><i class="icon-edit"></i> Добавить информацию о члене команды</h2>
+		</div>
+		<div class="box-content">
+			<form class="form-horizontal" method="POST" enctype='multipart/form-data'>
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Имя </label>
+						<div class="controls">
+							<input name='name' type="text" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Фамилия </label>
+						<div class="controls">
+							<input name='surname' type="text" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Логин </label>
+						<div class="controls">
+							<input name='login' type="text" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Пароль </label>
+						<div class="controls">
+							<input name='password' type="text" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Должность </label>
+						<div class="controls">
+							<input name='state' type="text" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="fileInput">Маленькая картинка</label>
+						<div class="controls">
+							<input name="smallpic" type="file">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="fileInput">Фон</label>
+						<div class="controls">
+							<input name="bg" type="file">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Общая информация</label>
+						<div class="controls">
+							<textarea name="about" class="cleditor" id="textarea2" rows="3"></textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Хобби</label>
+						<div class="controls">
+							<textarea name="hobbie" class="cleditor" id="textarea2" rows="3"></textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Умения</label>
+						<div class="controls">
+							<textarea name="skills" class="cleditor" id="textarea2" rows="3"></textarea>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" onclick="javascript:$('.form-horizontal').sublit()" class="btn btn-primary">
+							Сохранить
+						</button>
+						
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+	</div><!--/span-->
+</div>

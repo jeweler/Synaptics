@@ -1,0 +1,37 @@
+<div class="viewblog_bg">
+
+	<div class="blogpost_bg">
+		<div class="icon_about icon_1"></div>
+		<div class="blogtitle">
+			%title%
+		</div>
+		<div class="blogpost">
+			%body%
+		</div>
+		<div class="blogfooter">
+			Опубликован %substr date 8 2%.%substr date 5 2%.%substr date 0 4% в %substr date 11 5%
+		</div>
+	</div>
+	%render(blogs/comment, comments)%
+	<div class="addcomment">
+		<form method="POST">
+
+			<div class="name_comment">
+				Ф.И.
+				<input type="text" name="fio">
+			</div>
+			<div class="text_comment">
+				Комментарий:
+				<textarea name="text">				
+			</textarea>				
+			
+
+			</div>
+			<div class="write">
+				<input type="submit" value="Написать">
+			</div>
+		</form>
+
+	</div>
+
+</div>

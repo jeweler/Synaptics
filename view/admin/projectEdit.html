@@ -1,0 +1,82 @@
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2><i class="icon-edit"></i> Редактировать проект</h2>
+		</div>
+		<div class="box-content">
+			<form class="form-horizontal" method="POST" enctype='multipart/form-data'>
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Картинка </label>
+						<div class="controls">
+							<img src="/files/projects/small/%logo%">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Название </label>
+						<div class="controls">
+							<input name='name' type="text" value="%name%">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Дата</label>
+						<div class="controls">
+							<input  type="date" name="date" value="%date%">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Ссылка </label>
+						<div class="controls">
+							<input name='link' type="text" value="%link%">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Ссылка на Youtube</label>
+						<div class="controls">
+							<input name='video' type="text" value="%video%">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="fileInput">Логотип</label>
+						<div class="controls">
+							<input name="logo" type="file">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Полная информация</label>
+						<div class="controls">
+							<textarea name="big" class="tinymce cleditor" id="textarea2" rows="3">%big%</textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Краткая информация</label>
+						<div class="controls">
+							<textarea name="small" class="cleditor" id="textarea2" rows="3">%small%</textarea>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Фото <a class="addphoto">+</a></label>
+						<div class="controls">
+							<input type="file" name="links[]">
+							<br>
+							%each links as link%
+							<div style="float:left;margin-right:2px;background-image: url(/files/projects/%link%); background-size:75px; width:75px; height:75px">
+								<div id="%link%" albumid="%id%" class="deletephoto" style="cursor:pointer;width:10px; height:10px;background-image: url(%tfold%/img/delete.png)">
+								</div>
+							</div>
+							%end%
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" onclick="javascript:$('.form-horizontal').sublit()" class="btn btn-primary">
+							Сохранить
+						</button>
+						
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+	</div><!--/span-->
+</div>

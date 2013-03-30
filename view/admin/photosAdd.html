@@ -1,0 +1,39 @@
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title="">
+			<h2><i class="icon-edit"></i> Добавить фото</h2>
+		</div>
+		<div class="box-content">
+			<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">Заголовок</label>
+						<div class="controls">
+							<input type="text" name="name" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Дата</label>
+						<div class="controls">
+							<input  type="date" name="date" value="">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="textarea2">Фото <a class="addphoto">+</a></label>
+						<div class="controls">
+							<input type="file" name="links[]">
+							<br>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" onclick="javascript:$('.form-horizontal').submit()" class="btn btn-primary">
+							Сохранить
+						</button>
+
+					</div>
+				</fieldset>
+			</form>
+
+		</div>
+	</div><!--/span-->
+</div>
