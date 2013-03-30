@@ -1,7 +1,7 @@
 <?
 function loadModule($link){
 	if(!file_exists($link)){
-		throw new Exception("Ôàéëà ".$link." íå ñóùåñòâóåò");
+		throw new Exception("ÐœÐ¾Ð´ÑƒÐ»ÑŒ ".$link." Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚");
 	}
 }
 ?>
