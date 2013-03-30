@@ -25,9 +25,7 @@
 		function jsAdd($link){
 			$this->templatevars['addjs'] .= htmlgen::js($link);
 		}
-		function contentCompile($link, $link_, $array){
-			$this->content = html::compile($link, $link_, $array);
-		}
+
 		function cssAdd($link){
 			$this->templatevars['addcss'] .= htmlgen::css($link);
 		}
