@@ -1,7 +1,7 @@
 <?
 class AdminController extends Controller {
 	function constructor() {
-		$this -> setTitle("CS Admin Panel: ");
+		$this -> setTitle("Admin Panel: ");
 		$this -> layout = array('charisma', 'blank');
 		if ($this -> routes -> action !== "login") {
 			if (!isset($_COOKIE['login']) or !isset($_COOKIE['password'])) {
