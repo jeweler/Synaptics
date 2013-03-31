@@ -14,7 +14,7 @@ SYnaptics
 	- setCont(String name, Object n)  	Устанавливает переменную name для содержимого
 Каждому action'у контроллера соответствует файл содержимого(view).. Который находится в папке /view/{controller}/{action}.html
 В view можно использовать следующие команды шаблонизатора
-	- %render({file}, {varname}) 					Для каждого объекта массива {varname} выводит шаблон из /render/{file}.html 
+	- %render({file}, {varname})% 					Для каждого объекта массива {varname} выводит шаблон из /render/{file}.html 
 	- %each {varname} as {newvar}%{somecode}%end%   Для каждого значения массива {varname} выводит код {somecode}, где можно использовать переменную {newvar}
 	- %linkto {controller} {action} {param}=>{$value}...% Генерирует и выводит ссылку на {controller}->{action} с параметрами
 	- %{somevar}% 									Выводит переменную

@@ -25,7 +25,7 @@ class AdminController extends Controller {
 	function logout() {
 		setcookie('login', null, time() + 31556926, '/');
 		setcookie('password', null, time() + 31556926, '/');
-		helpers::redirect('/' . helpers::route('admin', 'login') . '.html');
+		helpers::redirect(helpers::route('admin', 'login', false, 1));
 	}
 
 	function login() {
