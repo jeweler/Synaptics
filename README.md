@@ -26,4 +26,4 @@ SYnaptics
 Пример:
 Array('string' => 'press/{id}', 'controller'=>'index', 'action'=>'readPress')
 В данном случае при переходе по ссылке press/{someid}.html будет использован контроллер index, а action readPress.. причём в контроллере, можно получить {id} вызвав $this->getArg("id")
-
+1
