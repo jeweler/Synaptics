@@ -232,6 +232,8 @@ class Module {
 		if($query){
 			if(mysql_num_rows($query)>0){
 				while($result = mysql_fetch_array($query)){
+					foreach($result as $key=>$value)
+						if(json_decode($value))
 					$return []= (object)$result;
 				}
 				$this->result = $return;

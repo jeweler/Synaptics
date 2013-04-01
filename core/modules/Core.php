@@ -1,6 +1,6 @@
 <?php
 class Core{
-	var $routes, $controller;
+	var $routes, $controller, $modules;
 	function __construct($query){
 		ob_start();
 		$this->loadModules(array('HTMLc', 'Default', 'HtmlGenerator', 'Routes', 'Controller', 'Curl', 'Line', 'Mysql', 'Helpers', 'Files', 'Images'));
@@ -18,8 +18,10 @@ class Core{
 		try{
 		if(!is_array($names)) throw new Exception('Ошибка модулей!');
 			foreach($names as $name){
-				if(!file_exists('./modules/'.$name.'.php')) throw new Exception('Файл /core/modules/'.$name.'.php не существует!');
-				include_once('./modules/'.$name.'.php');
+				if(file_exists('./modules/'.$name.'.php')){
+					include_once('./modules/'.$name.'.php');
+					$this->modules []= $name;
+				}
 			}
 		}catch(Exception $e){
 			new Except($e);
@@ -65,7 +67,6 @@ class Core{
 			$parents = array_values(class_parents($controllername));
 			if(!(count($parents) == 1 and $parents[0] == 'Controller')) throw new Exception('Класс '.$controllername.' должен быть дочерним классом класса Controller');
 			include('./config.php');
-			$this -> module = $mysql_module;
 			$this->controller = new $controllername($this);
 			if(!method_exists($this->controller, $this->routes->action)) throw new Exception('В классе '.$controllername.' не существует метода '.$this->routes->action.'()<br>Пожалуйста, создайте его <br><br>class '.$controllername.' extends Controller{<br><br>public function '.$this->routes->action.'(){<br><br>}<br><br>}');			
 		}catch(Exception $e){

@@ -3,11 +3,10 @@
 		var $core, $layout = null, $templatevars, $contentvars=array(), $content, $moduleconf;
 		function __construct($core){
 			$this->core = $core;
-			$this->args = $core->routes->get;
-			$this->content = "Укажите content в контроллере";
-			$this->templatevars = array('add'=>'','addjs'=>'','addcss'=>'',"title"=>"Укажите заголовок в контроллере!!");
-			$this->moduleconf = $core -> module;
 			$this->routes = $core->routes;
+			$this->args = $core->routes->get;
+			$this->content = "Укажите content в контроллере, либо создайте файл /view/".$this->routes->controller.'/'.$this->routes->action.'.html';
+			$this->templatevars = array('add'=>'','addjs'=>'','addcss'=>'',"title"=>"Укажите заголовок в контроллере!!");
 			$this->constructor();
 		}
 		function setTitle($text){
