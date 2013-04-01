@@ -21,14 +21,21 @@ class Module {
 	function safe($string = "", $key=false) {
 		if($key){
 			if(isset($this->rows[$key])){
-				$string = mysql_real_escape_string($string);
-				$type = $this->rows[$key]['Type'];
-				$length = $this->rows[$key]['Length'];
-				if($type !== 'int' and $type !== 'bigint'){
-					$string = '\''.$string.'\'';
-				}
+				if(is_string($string) or is_numeric($string)){
+					$string = mysql_real_escape_string($string);
+					$type = $this->rows[$key]['Type'];
+					$length = $this->rows[$key]['Length'];
 				
-				return $string;
+					if($type !== 'int' and $type !== 'bigint'){
+						$string = '\''.$string.'\'';
+					}
+					return $string;
+				}elseif(is_array($string)){
+					$string = '\''.json_encode($string).'\'';
+					return $string;
+				}else{
+					return null;
+				}
 			}else{
 				return null;
 			}
@@ -233,7 +240,7 @@ class Module {
 			if(mysql_num_rows($query)>0){
 				while($result = mysql_fetch_array($query)){
 					foreach($result as $key=>$value)
-						if(json_decode($value))
+						$result[$key] = (json_decode($value) == null)?$value:json_decode($value);
 					$return []= (object)$result;
 				}
 				$this->result = $return;

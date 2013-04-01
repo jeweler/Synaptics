@@ -3,7 +3,7 @@ class Core{
 	var $routes, $controller, $modules;
 	function __construct($query){
 		ob_start();
-		$this->loadModules(array('HTMLc', 'Default', 'HtmlGenerator', 'Routes', 'Controller', 'Curl', 'Line', 'Mysql', 'Helpers', 'Files', 'Images'));
+		$this->loadModules(array('MYSQL', 'Default', 'HtmlGenerator', 'Routes', 'Controller', 'Curl', 'Line', 'Mysql', 'Helpers', 'Files', 'Images'));
 		$this->routes = new Routes($query);
 		$this->checkAction();
 		$action=$this->routes->action;
