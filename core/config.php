@@ -7,5 +7,4 @@ $mysql_conn = Array(
 'db' => 'sati',
 'meta' => 'meta_'
 );
-$mysql_module = array();
 ?>
