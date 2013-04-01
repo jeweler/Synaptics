@@ -7,18 +7,4 @@ $mysql_conn = Array(
 'db' => 'sati',
 'meta' => 'cs_'
 );
-$mysql_module = array(
-'csco'=>
-	array('news'=>
-		array(
-			'name'=>
-				array(
-					'type' => 'text',
-					'minlength' => 5,
-					'maxlenght' => 6,
-					'regexpr' => '[^abc]+'
-				)
-		)
-	)
-)
 ?>
