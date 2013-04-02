@@ -1,7 +1,7 @@
 <?php
 class Except{
 	function __construct($message){
-		ob_end_clean();	
+		//ob_end_clean();	
 		$title = (func_num_args()>1)?func_get_arg(1):'';
 		$where=$message->getTrace();
 		$wh = "";

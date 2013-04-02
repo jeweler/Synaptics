@@ -1,8 +1,13 @@
-<?
+<?php
 class Module {
 	var $con, $table, $error, $rows, $result = array(), $querystack = array();
 	function __construct($table) {
-		include 'config.php';
+		if(class_exists('YAML')){
+			$conn = YAML::YAMLLoad('config.yaml');
+			$mysql_conn = $conn['mysql_conn'];
+		}else{
+			include 'config.php';
+		}
 		$this -> con = mysql_connect($mysql_conn['host'] . ':' . $mysql_conn['port'], $mysql_conn['user'], $mysql_conn['password']);
 		mysql_select_db($mysql_conn['db'], $this -> con);
 		$result = mysql_query("SHOW TABLES LIKE '" . $table . "'");

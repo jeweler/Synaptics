@@ -1,4 +1,4 @@
-<?
+<?php
 class Routes {
 	var $controller;
 	var $action;
@@ -6,8 +6,13 @@ class Routes {
 	var $query;
 	var $routes; 
 	function __construct($string){
-		include("./routes.php");
-		$this->routes=$routes;
+		if(class_exists('YAML')){
+			$this->routes = YAML::YAMLLoad('routes.yaml');
+			var_dump($this->routes);
+		}else{
+			include("./routes.php");
+			$this->routes=$routes;
+		}
 		$setted = false;
 		$this->query=$string;
 		try{

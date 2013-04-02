@@ -1,4 +1,4 @@
-<?
+<?php
 class AdminController extends Controller {
 	function constructor() {
 		$this -> setTitle("Admin Panel: ");

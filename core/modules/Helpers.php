@@ -1,4 +1,4 @@
-<?
+<?php
 class helpers {
 	static function redirect($url, $time = 0) {
 		header('Refresh: 0; url=' . $url);

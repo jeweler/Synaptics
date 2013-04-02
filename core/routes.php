@@ -1,4 +1,4 @@
-<?
+<?php
 	$routes = Array(
 		Array('string' => 'index-{mounth}-{year}-{side}', 'controller'=>'index', 'action'=>'index'),
 		Array('string' => 'index-news-{id}', 'controller'=>'index', 'action'=>'index'),
