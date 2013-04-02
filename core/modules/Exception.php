@@ -1,7 +1,8 @@
 <?php
 class Except{
 	function __construct($message){
-		//ob_end_clean();	
+		$ret = ob_get_contents();
+		ob_end_clean();	
 		$title = (func_num_args()>1)?func_get_arg(1):'';
 		$where=$message->getTrace();
 		$wh = "";
@@ -17,6 +18,7 @@ class Except{
 		$file = explode($_SERVER['DOCUMENT_ROOT'], $message->getFile());
 		$wh .= "В файле (".$file[1]."), в строке ".$message->getLine().'<br>';
 		die(html::compile('./modules/htmls/Exceptions.html', "", array(
+		'line' => $ret,
 		'where'=>$wh,
 		'message'=>$message->getMessage(),
 		'title'=>$title)));

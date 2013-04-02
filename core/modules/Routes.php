@@ -8,7 +8,6 @@ class Routes {
 	function __construct($string){
 		if(class_exists('YAML')){
 			$this->routes = YAML::YAMLLoad('routes.yaml');
-			var_dump($this->routes);
 		}else{
 			include("./routes.php");
 			$this->routes=$routes;
