@@ -1028,10 +1028,6 @@ class YAML {
 	}
 
 }
-
-// Enable use of YAML from command line
-// The syntax is the following: php YAML.php YAML.yaml
-
 define('YAML_FROM_COMMAND_LINE', false);
 
 do {
