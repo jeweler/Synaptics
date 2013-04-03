@@ -17,7 +17,7 @@ class Except{
 		}
 		$file = explode($_SERVER['DOCUMENT_ROOT'], $message->getFile());
 		$wh .= "В файле (".$file[1]."), в строке ".$message->getLine().'<br>';
-		die(html::compile('./modules/htmls/Exceptions.html', "", array(
+		die(hEtml::fromFile('./modules/htmls/Exceptions.html', array(
 		'line' => $ret,
 		'where'=>$wh,
 		'message'=>$message->getMessage(),

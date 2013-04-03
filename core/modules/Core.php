@@ -3,7 +3,7 @@ class Core{
 	var $routes, $controller, $modules;
 	function __construct($query){
 		ob_start();
-		$this->loadModules(array('YMLParser','Mysql', 'Default', 'HtmlGenerator', 'Routes', 'Controller', 'Curl', 'Line', 'Helpers', 'Files', 'Images'));
+		$this->loadModules(array('Translator','YMLParser','Mysql', 'Default', 'HtmlGenerator', 'Routes', 'Controller', 'Curl',  'Helpers', 'Files', 'Images'));
 		$this->routes = new Routes($query);
 		$this->checkAction();
 		$action=$this->routes->action;
@@ -39,17 +39,18 @@ class Core{
 				if(!file_exists($layout)) throw  new Exception('Файл '.$layout.' не существует!');
 				$vars = $this->controller->contentvars;
 				$vars['tfold'] = $this->controller->getTfold();
-				$content = file_exists($view)?html::compile($view, '', $vars):html::compile('', $this->controller->content, $vars);
-				echo html::compile($layout, '',  array_merge($this->controller->templatevars, array('content'=>$content, 'tfold'=>'/templates/'.implode('/', $dir))));
+				
+				$content = file_exists($view)?hEtml::fromFile($view, $vars):hEtml::compile($this->controller->content, $vars);
+				echo hEtml::fromFile($layout, array_merge($this->controller->templatevars, array('content'=>$content, 'tfold'=>'/templates/'.implode('/', $dir))));
 				
 			}elseif(is_null($layout)){
-				echo html::compile('',$this->controller->content, $this->controller->contentvars);
+				echo hEtml::compile($this->controller->content, $this->controller->contentvars);
 			}else{
 				
 				$layout = './../templates/default/'.$layout.'.html';
 				if(!file_exists($layout)) throw  new Exception('Файл '.$layout.' не существует');
-				$content = file_exists($view)?html::compile($view, '', $this->controller->contentvars):$this->controller->content;
-				echo html::compile($layout, '', array_merge($this->controller->templatevars, array('content'=>$content, 'tfold'=>'/templates/default/')));
+				$content = file_exists($view)?hEtml::fromFile($view, $this->controller->contentvars):$this->controller->content;
+				echo hEtml::fromFile($layout, array_merge($this->controller->templatevars, array('content'=>$content, 'tfold'=>'/templates/default/')));
 				
 			}
 		}catch(Exception $e){

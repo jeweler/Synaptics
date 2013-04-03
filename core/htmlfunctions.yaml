@@ -1,0 +1,16 @@
+- function : '% render ( {file}, {dir} ) %'
+  method : 'render'
+- function : '% repeat ( {times} ) %'
+  method: 'repeat'
+  end : true
+- function: '% each ( {var} ) %'
+  method: 'eachs'
+  end : true
+- function : '% if ( {cond} ) %'
+  method : ifcond
+  end : true
+- function : '% date ( {var} ) %'
+  method : 'date'
+- function : '% {var} %'
+  method : 'variable'
+

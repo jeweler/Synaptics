@@ -5,7 +5,6 @@ class helpers {
 		ob_end_flush();
 		exit();
 	}
-
 	static function ip() {
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -15,20 +14,6 @@ class helpers {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}
 		return $ip;
-	}
-	static function authorized(){
-		if (isset($_COOKIE['login']) and isset($_COOKIE['password'])) {
-			$command = new mysql('command');
-			$command -> find(false, array('login' => $_COOKIE['login'], 'and', 'password' => $_COOKIE['password']));
-			if ($command -> lastnum > 0) {
-				return $command->result[0]->id;
-			}
-			else{
-				return false;
-			}
-		}else{
-			return false;
-		}
 	}
 	static function route($controller = "", $action = "", $array = array(), $with = false) {
 		include ("./routes.php");
