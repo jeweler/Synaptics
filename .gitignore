@@ -1,4 +1,4 @@
 
 core/modules/Mssql.php
 .project
-.settings/
+.settings
