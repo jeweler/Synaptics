@@ -1,0 +1,12 @@
+-string: '{controller:num}/{action}'
+  via: 'GET'
+  regexpr:
+    action: '[0-9]+'
+-string: '{action}'
+  data:
+    controller: 'index'
+-string: '{somevar:var}'
+  data:
+    controller: 'first'
+    action: 'second'
+  via: 'GET'

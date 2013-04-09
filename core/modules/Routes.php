@@ -1,77 +1,103 @@
 <?php
-class Routes {
-	var $controller;
-	var $action;
-	var $get;
-	var $query;
-	var $routes; 
-	function __construct($string){
-		if(class_exists('YAML')){
-			$this->routes = YAML::YAMLLoad('routes.yaml');
-		}else{
-			include("./routes.php");
-			$this->routes=$routes;
-		}
+class Routes{
+	var $query, $routes, $type, $controller, $action;
+	function __construct($query){
+		$this->query = $query;
+		$this->type = $_SERVER['REQUEST_METHOD'];
+		$this -> types = YAML::YAMLLoad('configs/types.yaml');
+		$routes = YAML::YAMLLoad('configs/routes.yaml');
+		$this -> routes = $routes;
 		$setted = false;
-		$this->query=$string;
-		try{
-			foreach($this->routes as $route){
-				if($this->Match($route['string'])){
-					$vars = (count($this->GetVars($route['string']))>0)?array_combine($this->GetVars($route['string']), $this->GetVals($route['string'])):array();
-					if($this->isValid($route['string'], $route)){
-						$this->setVars($vars , $route);
-						$setted = true;
-						break;
-					}
+		foreach($routes as $route){
+			$string = $route['string'];
+			$vars = $this -> getVars($string);
+			$types = $this -> getTypes($string);
+			if(isset($route['via'])){
+				if(in_array(strtolower($route['via']), array('post','get','put'))){
+					if(strtolower($route['via']) !== strtolower($this->type))
+						continue;
 				}
 			}
-			if(!$setted) throw new Exception("Не найден ни один путь!");
+			$statics = isset($route['data'])?$route['data']:array();
+			$regexprs = isset($route['regexpr'])?$route['regexpr']:array();
+			if($this->is_valid($statics, $vars)){
+				
+				$regexpr = $this->getRegexpr($string);
+				if(preg_match_all($regexpr, $query, $results)){
+					
+					$full = $this -> getFull($string, $query, $statics);
+					foreach($types as $key=>$type){
+						if(key_exists($type, $this -> types)){
+							if(!preg_match('/'.$this->types[$type].'/', $full[$key])) continue;
+						}
+					}
+					foreach($regexprs as $key=>$regexpt){
+						if(key_exists($key, $full))
+							if(!preg_match('/'.$regexpt.'/', $full[$key])){
+								continue;
+							}
+					}
+					if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $full['action']))
+						continue;
+					$this->controller = $full['controller'];
+					$this->action = $full['action'];
+					unset($full['controller']);
+					unset($full['action']);
+					$this->get = $full;
+					$setted = true;
+					break;
+				}
+			}
 		}
-		catch(Exception $e){
-			new Except($e, "Ошибка путей!");
+		if(!$setted){
+			new Except(new Exception('Не найден ни один маршрут по запросу "http://'.$_SERVER['HTTP_HOST'].'/'.$query.'.html:'.$this->type.'"'), 'Ошибка путей');
 		}
-		unset($this->lastregexpr);
-		unset($this->routes);
 	}
-	private function setVars($array, $route){
-		unset($route['string']);
-		$result = array_merge($array, $route);
-		$this->controller = $result['controller'];
-		$this->action = $result['action'];
-		unset($result['controller']);
-		unset($result['action']);
-		$this->get = $result;
+	function getFull($string, $request, $data){
+		$f = $this->getVars($string);
+		$s = $this->getVals($string, $request);
+		return array_merge(array_combine($f, $s), $data);
 	}
-	private function isValid($string, $route){
-		$strvars = $this->GetVars($string);
-		unset($route['string']);
-		$array = array_merge($strvars, array_keys($route));
-		return (in_array('controller', $array) and in_array('action', $array));
+	function getRegexpr($string){
+		$string = preg_quote($string);
+		$string = str_replace("\\{", '{', $string);
+		$string = str_replace("\\}", '}', $string);
+		$string = str_replace("\\:", ':', $string);
+		$string = str_replace("/", '\/', $string);
+		$string = preg_replace('#\\{([1-9\w]+)(?::([1-9\w]+))?\\}#', '([^\/]+)', $string);
+		return '/^'.$string.'$/';
 	}
-	function Match($string) {
-		return is_array($this->GetVals($string, $this->query))?true:false;
+	function is_valid($array1, $array2){
+		$arr = array_merge(array_keys($array1),$array2);
+		return (in_array('controller', $arr) and in_array('action', $arr));
 	}
-	private function array_vals_rec($array) {
-		$ret = Array();
-		foreach ($array as $item) {
-			$ret[] = $item[0];
-		}
-		return $ret;
-	}
-	private function GetVals($string){
-		
-		if($this->query == $string)
+	function getVals($string, $request){
+		$count = preg_match_all('/{([1-9\w]+)(?::([1-9\w]+))?}/', $string, $results);
+		if($count){
+			$keys = $results[1];
+			$regexprs = $this -> getRegexpr($string);
+			if(count(preg_match_all($regexprs, $request, $values))){
+				unset($values[0]);
+				$ret = array();
+				foreach($values as $val){
+					$ret []= $val[0];
+				}
+				return $ret;
+			}else{
+				return array();
+			}
+		}else{
 			return array();
-		
-		$regexpr = '/^' . preg_replace('/{.+?}/', '([^\/]+?)', str_replace("/", "\/", $string)) . '$/';
-		$good = preg_match_all($regexpr, $this->query, $reslist);
-		unset($reslist[0]);
-		return $good?$this -> array_vals_rec($reslist):false;
+		}
 	}
-	private function GetVars($string){
-		preg_match_all('/{(.*?)}/', $string, $varlist);
-		return $varlist[1];
+	function getTypes($string){
+		$count = preg_match_all('/{([1-9\w]+)(?::([1-9\w]+))?}/', $string, $results);
+		$ret = array_combine($results[1], $results[2]);
+		return $count?$ret:array();
 	}
-
+	function getVars($string){
+		$count = preg_match_all('/{([1-9\w]+)(?::([1-9\w]+))?}/', $string, $results);
+		return $count?$results[1]:array();
+	}
 }
 ?>

@@ -21,7 +21,6 @@ class AdminController extends Controller {
 			}
 		}
 	}
-
 	function logout() {
 		setcookie('login', null, time() + 31556926, '/');
 		setcookie('password', null, time() + 31556926, '/');

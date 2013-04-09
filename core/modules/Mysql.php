@@ -1,9 +1,16 @@
 <?php
+/**
+ * The Module Class.
+ *
+ * Даёт набор методов для работой с MYSQL
+ *
+ * @package DB
+ */
 class Module {
 	var $con, $table, $error, $rows, $result = array(), $querystack = array();
 	function __construct($table) {
 		if(class_exists('YAML')){
-			$conn = YAML::YAMLLoad('config.yaml');
+			$conn = YAML::YAMLLoad('configs/config.yaml');
 			$mysql_conn = $conn['mysql_conn'];
 		}else{
 			include 'config.php';
@@ -23,7 +30,7 @@ class Module {
 			$this -> rows[$row["Field"]]['Length'] = isset($params[3][0])?$params[3][0]:null;
 		}
 	}
-	function safe($string = "", $key=false) {
+	private function safe($string = "", $key=false) {
 		if($key){
 			if(isset($this->rows[$key])){
 				if(is_string($string) or is_numeric($string)){
@@ -48,7 +55,16 @@ class Module {
 			return mysql_real_escape_string($string);
 		}
 	}
-	
+	/**
+	 * Поиск записей в таблице
+	 * @access public
+	 * @return array/null
+	 * @param array $rows поля, которые нужно вернуть 
+	 * @param array $where условие поиска Array("id"=>5, "and", "someparam"=>array(">", 5));
+	 * @param array $join формат array('join_table', 'join_row', 'table_row')
+	 * @param array $order формат array("date", "DESC");
+	 * @param array $limit формат array(5, 30);
+	 */
 	function find($rows = false, $where = false, $join = false, $order = false, $limit = false) {
 		$query[] = 'SELECT';
 		if ($rows) {
@@ -77,7 +93,6 @@ class Module {
 						$query[] = $value;
 
 					} elseif (is_array($value)) {
-
 						if (count($value) == 2) {
 							if (key_exists($key, $this -> rows)) {
 								if($this->safe($value[1], $key) !== null){
@@ -108,8 +123,10 @@ class Module {
 			}
 		}
 		if ($order) {
-			if ($order) {
-				$query = array_merge($query, array('ORDER BY', $order[0], $order[1]));
+			if(is_array($order)){
+				if (count($order) == 2) {
+					$query = array_merge($query, array('ORDER BY', $order[0], $order[1]));
+				}
 			}
 		}
 		if ($limit) {
@@ -123,6 +140,11 @@ class Module {
 		$this->querystack []= $this->query;
 		return $this->getByQuery($this->query);
 	}
+	/**
+	 * Удаляет из таблицы все записи найденные с помощью метода find
+	 * @access public
+	 * @return null
+	 */
 	function delete(){
 		if(count($this->result) > 0){
 			$query = "DELETE FROM ".$this->table.' WHERE id IN (';
@@ -136,6 +158,12 @@ class Module {
 			mysql_query($query, $this->con);
 		}
 	}
+	/**
+	 * Изменяет записи, найденные с помощью метода find
+	 * @access public
+	 * @param array $params поля, которые нужно изменить
+	 * @return null
+	 */
 	function update($params = array()){
 		$query = array();
 		$query []= 'UPDATE';
@@ -165,6 +193,12 @@ class Module {
 			mysql_query($this->query, $this->con);
 		}
 	}
+	/**
+	 * Возвращает дату в формате для MYSQL 'Y-m-d h:i:s'
+	 * @access public
+	 * @param string $date Дата, которую нужно преобразовать в формат для  MYSQL
+	 * @return string
+	 */
 	static function date($date = ""){
 		if($date == "")
 			return date('Y-m-d h:i:s');
@@ -202,6 +236,12 @@ class Module {
 			
 		}
 	}
+	/**
+	 * Добавляет новую запись в таблицу
+	 * @access public
+	 * @param array $params Значения полей новой записи array('title'=>'sometitle', 'date'=>'1994-11-18')
+	 * @return string
+	 */
 	function add($params){
 		if(count($params)>0){
 			$query = array();
@@ -238,6 +278,12 @@ class Module {
 			}
 		}
 	}
+	/**
+	 * Возвращает все записи в таблице по запросу
+	 * @access public
+	 * @param string $query SQL запрос
+	 * @return array
+	 */
 	function getByQuery($query){
 		$query = mysql_query($query, $this->con);
 		$return = array();

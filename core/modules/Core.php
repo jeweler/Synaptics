@@ -3,29 +3,32 @@ class Core{
 	var $routes, $controller, $modules;
 	function __construct($query){
 		ob_start();
-		$this->loadModules(array('Translator','YMLParser','Mysql', 'Default', 'HtmlGenerator', 'Routes', 'Controller', 'Curl',  'Helpers', 'Files', 'Images'));
+		include_once('modules/YMLParser.php');
+		$modules = glob("modules/*.php");
+		$moduls = array();
+		foreach($modules as $module){
+			preg_match_all('/([^\/]+).php/', $module, $module);
+			$moduls[]= $module[1][0];
+		}
+		$this->loadModules($moduls);
 		$this->routes = new Routes($query);
 		$this->checkAction();
 		$action=$this->routes->action;
 		if(file_exists('./../controller/default.php')){
-			include_once('./../controller/default.php');
+			require_once ('./../controller/default.php');
 			$defaultController = new DefaultController($this);
 		}
 		$this->controller->$action();
 		$this->showView();
 	}
 	private function loadModules($names){
-		try{
-		if(!is_array($names)) throw new Exception('Ошибка модулей!');
+		if(!is_array($names)) new Except(new Exception('Ошибка модулей!'));
 			foreach($names as $name){
 				if(file_exists('./modules/'.$name.'.php')){
 					include_once('./modules/'.$name.'.php');
 					$this->modules []= $name;
 				}
 			}
-		}catch(Exception $e){
-			new Except($e);
-		}
 	}
 	private function showView(){
 		try{

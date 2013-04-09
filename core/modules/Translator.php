@@ -5,7 +5,7 @@ class hEtml {
 		return (file_exists($filename))? self::compile(file_get_contents($filename), $vars) : self::compile($filename, $vars);
 	}
 	public static function compile($text, $vars = array()) {
-		self::$functions = YAML::YAMLLoad('htmlfunctions.yaml');
+		self::$functions = YAML::YAMLLoad('configs/htmlfunctions.yaml');
 		return self::search_first($text, $vars);
 	}
 	private static function search_first($text, $vars) {

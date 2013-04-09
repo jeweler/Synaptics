@@ -1,3 +1,0 @@
- -string: '{controller}/{action}'
- -string: '{action}'
-  controller: 'index'
