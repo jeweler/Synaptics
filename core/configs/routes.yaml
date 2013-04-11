@@ -1,12 +1,8 @@
--string: '{controller:num}/{action}'
-  via: 'GET'
-  regexpr:
-    action: '[0-9]+'
+-string: 'day-{mounth:num}-{year:num}'
+  data:
+    controller: 'index'
+    action: 'showday'
 -string: '{action}'
   data:
     controller: 'index'
--string: '{somevar:var}'
-  data:
-    controller: 'first'
-    action: 'second'
-  via: 'GET'
+
