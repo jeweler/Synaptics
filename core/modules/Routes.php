@@ -24,16 +24,18 @@ class Routes{
 				
 				$regexpr = self::getRegexpr($string);
 				if(preg_match_all($regexpr, $query, $results)){
-					
 					$full = self::getFull($string, $query, $statics);
 					$end = false;
 					foreach($types as $key=>$type){
+						
 						if(key_exists($type, $this -> types)){
 							if(!preg_match('/'.$this->types[$type].'/', $full[$key])) $end = true;
 							
 						}
+						
 						if(key_exists($type, $regexprs)){
 							if(!preg_match('/'.$regexprs[$type].'/', $full[$key])) $end = true;
+							
 						}
 					}
 					if($end) continue;
@@ -94,7 +96,7 @@ class Routes{
 				return $trigger?'/'.$ret.'.html': $ret;
 			}
 		}
-		return "index";
+		return "/system/404.html";
 	}
 	private static function getFull($string, $request, $data){
 		$f = self::getVars($string);

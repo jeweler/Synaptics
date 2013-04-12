@@ -1,8 +1,7 @@
--string: 'day-{mounth:num}-{year:num}'
+-string: '{action:type}'
   data:
     controller: 'index'
-    action: 'showday'
--string: '{action}'
-  data:
-    controller: 'index'
-
+  via: 'get'
+  types:
+    type: '^[abc]+$'
+-string: '{controller}/{action}'

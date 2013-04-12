@@ -1,4 +1,4 @@
-- function : '% render ( {file}, {dir} ) %'
+- function : '% render ( {file}, {var} ) %'
   method : 'render'
 - function : '% repeat ( {times} ) %'
   method: 'repeat'
@@ -11,6 +11,9 @@
   end : true
 - function : '% date ( {var} ) %'
   method : 'date'
+- function : '% linkto ( {controller}, {action} ) %'
+  end: true
+  method: 'linkto'
 - function : '% {var} %'
   method : 'variable'
 
