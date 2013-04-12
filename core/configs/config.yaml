@@ -4,4 +4,4 @@ mysql_conn:
   user: 'root'
   password: 'lewejer'
   db: 'sati'
-status: 'debug' 
+status: 'release'  #release/debug 
