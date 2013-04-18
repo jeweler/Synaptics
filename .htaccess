@@ -1,5 +1,5 @@
 DirectoryIndex index.html
-RewriteEngine On
+RewriteEngine On1
 RewriteRule ^(.*?)/$ $1/index.html [QSA]
 ErrorDocument 403 /index.html
 RewriteRule ^(.*)\.html$ /core/core.php?stringjustforcore=$1  [QSA]
