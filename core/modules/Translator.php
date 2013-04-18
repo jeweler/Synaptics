@@ -27,7 +27,6 @@ class hEtml {
 		}
 		return $text;
 	}
-
 	private static function linkto($params, $var) {
 		$_add = explode(',', $params['code']);
 		$add = array();

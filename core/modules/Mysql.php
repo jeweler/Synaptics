@@ -30,6 +30,14 @@ class Module {
 			$this -> rows[$row["Field"]]['Length'] = isset($params[3][0])?$params[3][0]:null;
 		}
 	}
+	public function getpage($page = 1, $perpage = 10){
+		if($perpage > 1 and $page > 1){	
+			$pages = ceil(count($result)/$perpage);
+			$page = ($page > $pages)? 1 : $page;
+			return array_slice($this->result, ($page-1)*$perpage, $perpage);
+		}
+		return array();
+	}
 	private function safe($string = "", $key=false) {
 		if($key){
 			if(isset($this->rows[$key])){
