@@ -54,7 +54,7 @@ class hEtml {
 		$return = "";
 		if(isset($vars[$var]) and is_array($vars[$var])){
 			foreach($vars[$var] as $_var){
-				$return .= self::fromFile($file, (array)$_var);
+				$return .= self::quote(self::fromFile($file, (array)$_var));
 			}
 			return $return;
 		}else{	
@@ -123,14 +123,18 @@ class hEtml {
 	private static function repeat($params) {
 		return str_repeat($params['code'], $params['times']);
 	}
-
+	private static function stylesheet($params){
+		return '<script type="text/javascript" src="'.$params['name'].'"></script>';
+	}
 	private static function variable($params, $vars, $l) {
 		if (isset($vars[$params['var']]) && (is_numeric($vars[$params['var']]) or is_string($vars[$params['var']])))
 			return $vars[$params['var']];
 		else 
 			return $l;
 	}
-
+	private static function quote($text){
+		return str_replace("%", "&#37", $text);
+	}
 	private static function get_params($function, $text, $end) {
 		$i = preg_match_all("/{([0-9\w]+?)}/", $function, $results);
 		$return = array();

@@ -1,5 +1,5 @@
 <?php
-class DefaultController extends DefaultC{
+class DefaultControllerС extends DefaultC{
 	function constructor(){
 		
 	}

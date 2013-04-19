@@ -3,4 +3,4 @@
     controller: 'index'
   via: 'get'
 -string: '{controller}/{action}'
-root: 'default.html'
+root: 'index.html'

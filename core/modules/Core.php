@@ -1,14 +1,46 @@
 <?php
 class Core{
-	var $routes, $controller, $modules;
+	var $routes, $controller, $modules, $query;
+	private function checkFile(){
+		if(preg_match_all("/^(.*?)\.([0-9\w]+?)$/", $this->query, $values)){
+			$query = $values[1][0];
+			$format = $values[2][0];
+		}else{
+			$format = "";
+		}
+		if($format == 'css'){
+			if(preg_match("/^[^\\:*?\"<>|]+$/", $query)){
+				if(strlen($query)<256){
+					if(file_exists('../includes/css/'.$query.'.css')){
+						header('Content-type: text/css');
+						die(file_get_contents("../includes/css/".$query.'.css'));
+					}else{
+						die("");
+					}
+				}
+			}
+		}
+		if($format == 'js'){
+			if(preg_match("/^[^\\:*?\"<>|]+$/", $query)){
+				if(strlen($query)<256){
+					if(file_exists('../includes/javascript/'.$query.'.js')){
+						header('Content-type: text/javascript');
+						die(file_get_contents("../includes/javascript/".$query.'.js'));
+					}else{
+						die("");
+					}
+				}
+			}
+		}
+		if(is_file('../public/'.$query)) die(file_get_contents('../public/'.$query));
+	}
 	function __construct($query){
+		$this->query = $query;
+		
 		ob_start();
 		require_once 'modules/YMLParser.php';
-		
 		$config = YAML::YAMLLoad("configs/routes.yaml");
 		if(isset($config['root']) and $query == "") $query = $config['root'];
-		
-		if(is_file('../public/'.$query)) die(file_get_contents('../public/'.$query));
 		$modules = glob("modules/*.php");
 		$moduls = array();
 		
@@ -18,7 +50,7 @@ class Core{
 		}
 		
 		$this->loadModules($moduls);
-		
+		$this->checkFile();
 		$this->routes = new Routes($query);
 		
 		$this->checkAction();
@@ -26,7 +58,7 @@ class Core{
 		
 		if(file_exists('./../controller/default.php')){
 			require_once ('./../controller/default.php');
-			$defaultController = new DefaultController($this);
+			$defaultController = new DefaultControllerС($this);
 		}
 		$this->controller->$action();
 		$this->showView();

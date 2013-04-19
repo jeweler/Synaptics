@@ -16,4 +16,5 @@
   method: 'linkto'
 - function : '% {var} %'
   method : 'variable'
-
+- function: '% stylesheet {name} %'
+  method: 'stylesheet'

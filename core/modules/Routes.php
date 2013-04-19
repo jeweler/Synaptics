@@ -12,6 +12,7 @@ class Routes{
 			$string = $route['string'];
 			$vars = self::getVars($string);
 			$types = self::getTypes($string);
+			$format = isset($route['format'])?$route['format']:null;
 			if(isset($route['via'])){
 				if(in_array(strtolower($route['via']), array('post','get','put'))){
 					if(strtolower($route['via']) !== strtolower($this->type))
@@ -38,6 +39,8 @@ class Routes{
 						}
 						
 					}
+					if(($format !== null) and ($format !== $this->format)) continue;
+							
 					if($end) continue;
 					
 					if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $full['action']))
