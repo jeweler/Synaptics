@@ -6,12 +6,18 @@ class Core{
 			$query = $values[1][0];
 			$format = $values[2][0];
 		}else{
+			$query = $this->query;
 			$format = "";
 		}
 		if($format == 'css'){
+			
 			if(preg_match("/^[^\\:*?\"<>|]+$/", $query)){
 				if(strlen($query)<256){
-					if(file_exists('../includes/css/'.$query.'.css')){
+					if(file_exists('../includes/css/'.$query.'.css.less')){
+						$less = new Lessc();
+						header('Content-type: text/css');
+						die($less->compileFile('../includes/css/'.$query.'.css.less'));
+					}elseif(file_exists('../includes/css/'.$query.'.css')){
 						header('Content-type: text/css');
 						die(file_get_contents("../includes/css/".$query.'.css'));
 					}else{
@@ -23,7 +29,13 @@ class Core{
 		if($format == 'js'){
 			if(preg_match("/^[^\\:*?\"<>|]+$/", $query)){
 				if(strlen($query)<256){
-					if(file_exists('../includes/javascript/'.$query.'.js')){
+					if(file_exists('../includes/javascript/'.$query.'.js.coffee')){
+						$file = file_get_contents('../includes/javascript/'.$query.'.js.coffee');
+						header('Content-type: text/javascript');
+						CoffeeScript\Init::load();
+						die(CoffeeScript\Compiler::compile($file, array('filename' => $query.'.js.coffee')));
+						
+					}elseif(file_exists('../includes/javascript/'.$query.'.js')){
 						header('Content-type: text/javascript');
 						die(file_get_contents("../includes/javascript/".$query.'.js'));
 					}else{
