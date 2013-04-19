@@ -2,6 +2,5 @@
   data:
     controller: 'index'
   via: 'get'
-  types:
-    type: '^[abc]+$'
 -string: '{controller}/{action}'
+root: 'default.html'

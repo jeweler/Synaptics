@@ -3,17 +3,27 @@ class Core{
 	var $routes, $controller, $modules;
 	function __construct($query){
 		ob_start();
-		include_once('modules/YMLParser.php');
+		require_once 'modules/YMLParser.php';
+		
+		$config = YAML::YAMLLoad("configs/routes.yaml");
+		if(isset($config['root']) and $query == "") $query = $config['root'];
+		
+		if(is_file('../public/'.$query)) die(file_get_contents('../public/'.$query));
 		$modules = glob("modules/*.php");
 		$moduls = array();
+		
 		foreach($modules as $module){
 			preg_match_all('/([^\/]+).php/', $module, $module);
 			$moduls[]= $module[1][0];
 		}
+		
 		$this->loadModules($moduls);
+		
 		$this->routes = new Routes($query);
+		
 		$this->checkAction();
 		$action=$this->routes->action;
+		
 		if(file_exists('./../controller/default.php')){
 			require_once ('./../controller/default.php');
 			$defaultController = new DefaultController($this);

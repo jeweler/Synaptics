@@ -1,8 +1,8 @@
 <?php
 class Routes{
-	var $query, $type, $controller, $action;
+	var $query, $type, $controller, $action, $format;
 	function __construct($query){
-		$this->query = $query;
+		list($this->query, $this->format) = self::devide($query);
 		$this->type = $_SERVER['REQUEST_METHOD'];
 		$this -> types = YAML::YAMLLoad('configs/types.yaml');
 		$routes = YAML::YAMLLoad('configs/routes.yaml');
@@ -21,10 +21,9 @@ class Routes{
 			$statics = isset($route['data'])?$route['data']:array();
 			$regexprs = isset($route['types'])?$route['types']:array();
 			if(self::is_valid($statics, $vars)){
-				
 				$regexpr = self::getRegexpr($string);
 				if(preg_match_all($regexpr, $query, $results)){
-					$full = self::getFull($string, $query, $statics);
+					$full = self::getFull($string, $this->query, $statics);
 					$end = false;
 					foreach($types as $key=>$type){
 						
@@ -37,8 +36,10 @@ class Routes{
 							if(!preg_match('/'.$regexprs[$type].'/', $full[$key])) $end = true;
 							
 						}
+						
 					}
 					if($end) continue;
+					
 					if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $full['action']))
 						continue;
 					$this->controller = $full['controller'];
@@ -49,6 +50,7 @@ class Routes{
 					$this->current = $route;
 					unset($this->routes);
 					unset($this->types);
+					
 					$setted = true;
 					break;
 				}
@@ -56,6 +58,14 @@ class Routes{
 		}
 		if(!$setted){
 			new Except(new Exception('Не найден ни один маршрут по запросу "http://'.$_SERVER['HTTP_HOST'].'/'.$query.'.html:'.$this->type.'"'), 'Ошибка путей');
+		}
+	}
+
+	static function devide($query){
+		if(preg_match_all("/^(.*?)\.([0-9\w]+?)$/", $query, $values)){
+			return array($values[1][0], $values[2][0]);
+		}else{
+			return array($query, "");
 		}
 	}
 	/**

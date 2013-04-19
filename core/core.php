@@ -4,5 +4,5 @@ function myErrorHandler($errno, $errstr, $errfile, $errline){
 }
 set_error_handler("myErrorHandler");
 include_once('./modules/Core.php');
-$core = new Core($_GET['stringjustforcore']);
+$core = new Core(substr($_SERVER['REQUEST_URI'],1));
 ?>

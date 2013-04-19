@@ -1,8 +1,8 @@
 DirectoryIndex index.html
-RewriteEngine On1
-RewriteRule ^(.*?)/$ $1/index.html [QSA]
+RewriteEngine On
 ErrorDocument 403 /index.html
-RewriteRule ^(.*)\.html$ /core/core.php?stringjustforcore=$1  [QSA]
+RewriteCond %{REQUEST_URI} !^/core/core.php$ 
+RewriteRule ^.*$ /core/core.php  [QSA]
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 AddDefaultCharset UTF-8
 <Files ~ "\.(yaml)$">
