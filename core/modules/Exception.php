@@ -19,13 +19,13 @@ class Except{
 			}
 			$file = explode($_SERVER['DOCUMENT_ROOT'], $message->getFile());
 			$wh .= "В файле (".$file[1]."), в строке ".$message->getLine().'<br>';
-			die(hEtml::fromFile('./modules/htmls/Exceptions.html', array(
+			die(hEtml::fromFile('../system/Exceptions.html', array(
 			'line' => $ret,
 			'where'=>$wh,
 			'message'=>$message->getMessage(),
 			'title'=>$title)));
 		}else{
-			die(hEtml::fromFile('./../system/404.html'));
+			die(hEtml::fromFile('../system/404.html'));
 		}
 	}
 }

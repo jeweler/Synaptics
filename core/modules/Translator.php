@@ -124,7 +124,7 @@ class hEtml {
 		return str_repeat($params['code'], $params['times']);
 	}
 	private static function stylesheet($params){
-		return '<script type="text/javascript" src="'.$params['name'].'"></script>';
+		return '<link type="text/css" rel="stylesheet" href="/'.$params['name'].'.css"></script>';
 	}
 	private static function variable($params, $vars, $l) {
 		if (isset($vars[$params['var']]) && (is_numeric($vars[$params['var']]) or is_string($vars[$params['var']])))
