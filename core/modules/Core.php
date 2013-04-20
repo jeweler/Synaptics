@@ -44,7 +44,11 @@ class Core{
 				}
 			}
 		}
-		if(is_file('../public/'.$query)) die(file_get_contents('../public/'.$query));
+		if(is_file('../public/'.$this->query)){
+			$type = mime_content_type('../public/'.$this->query);
+			header('Content-type: '.$type);
+			die(file_get_contents('../public/'.$this->query));
+		}
 	}
 	function __construct($query){
 		$this->query = $query;

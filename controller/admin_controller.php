@@ -5,7 +5,7 @@ class AdminController extends Controller {
 		$this -> layout = array('charisma', 'blank');
 		if ($this -> routes -> action !== "login") {
 			if (!isset($_COOKIE['login']) or !isset($_COOKIE['password'])) {
-				helpers::redirect('/' . helpers::route('admin', 'login') . '.html');
+				helpers::redirect('/' . Routes::get('admin', 'login'));
 			} else {
 
 				$configs = new mysql('configs');
@@ -16,7 +16,7 @@ class AdminController extends Controller {
 				if (!($_COOKIE['login'] == $deflogin and $_COOKIE['password'] == md5($defpass))) {
 					setcookie('login', '');
 					setcookie('password', '');
-					helpers::redirect('/' . helpers::route('admin', 'login') . '.html');
+					helpers::redirect('/' . Routes::get('admin', 'login'));
 				}
 			}
 		}
@@ -24,7 +24,7 @@ class AdminController extends Controller {
 	function logout() {
 		setcookie('login', null, time() + 31556926, '/');
 		setcookie('password', null, time() + 31556926, '/');
-		helpers::redirect(helpers::route('admin', 'login', false, 1));
+		helpers::redirect('/' . Routes::get('admin', 'login'));
 	}
 
 	function login() {

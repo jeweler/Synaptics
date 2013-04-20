@@ -11,10 +11,13 @@
   end : true
 - function : '% date ( {var} ) %'
   method : 'date'
+- function : '% linkto ( {controller} , {action} , {format}) %'
+  end: true
+  method: 'linkto'
 - function : '% linkto ( {controller}, {action} ) %'
   end: true
   method: 'linkto'
-- function : '% {var} %'
-  method : 'variable'
 - function: '% stylesheet {name} %'
   method: 'stylesheet'
+- function : '% {var} %'
+  method : 'variable'

@@ -6,9 +6,13 @@ class Routes{
 		$this->type = $_SERVER['REQUEST_METHOD'];
 		$this -> types = YAML::YAMLLoad('configs/types.yaml');
 		$routes = YAML::YAMLLoad('configs/routes.yaml');
+		if(isset($routes['root'])){
+			unset($routes['root']);
+		}
 		$this -> routes = $routes;
 		$setted = false;
 		foreach($routes as $route){
+			
 			$string = $route['string'];
 			$vars = self::getVars($string);
 			$types = self::getTypes($string);
@@ -60,10 +64,9 @@ class Routes{
 			}
 		}
 		if(!$setted){
-			new Except(new Exception('Не найден ни один маршрут по запросу "http://'.$_SERVER['HTTP_HOST'].'/'.$query.'.html:'.$this->type.'"'), 'Ошибка путей');
+			new Except(new Exception('Не найден ни один маршрут по запросу "http://'.$_SERVER['HTTP_HOST'].'/'.$this->query.':'.$this->type.'"'), 'Ошибка путей');
 		}
 	}
-
 	static function devide($query){
 		if(preg_match_all("/^(.*?)\.([0-9\w]+?)$/", $query, $values)){
 			return array($values[1][0], $values[2][0]);
@@ -80,12 +83,13 @@ class Routes{
 	 * @param array $params дополнительные параметры
 	 * @param boolean $trigger дополнять ли маршрут {/}+Route+{.html} по умолчанию true
 	 */
-	static function get($controller = "", $action = "",$params = array(), $trigger = true){
+	static function get($controller = "", $action = "", $params = array(), $format = null){
 		$full = array_merge($params, array('controller'=>$controller, 'action'=>$action));
 		$routes = YAML::YAMLLoad('configs/routes.yaml');
 		foreach($routes as $route){
 			$vars = self::getVars($route['string']);
 			$statics = isset($route['data'])?$route['data']:array();
+			$formatss = isset($route['format'])?$route['format']:null;
 			$fullr = array_merge($vars, array_keys($statics));
 			if(array_diff($fullr, array_keys($full)) == array()){
 				$stop = false;
@@ -101,12 +105,16 @@ class Routes{
 					}
 					
 				}
+				if($formatss !== null){
+					if($formatss !== $format) continue;
+				}
 				if($stop) continue;
 				$ret = $route['string'];
 				foreach($full as $key=>$value){
 					$ret = preg_replace('/{ *'. $key .' *(?:\:.*?)?}/', $value, $ret);
 				}
-				return $trigger?'/'.$ret.'.html': $ret;
+				if($format !== null and $formatss !== "") $ret.='.'.$format;
+				return $ret;
 			}
 		}
 		return "/system/404.html";

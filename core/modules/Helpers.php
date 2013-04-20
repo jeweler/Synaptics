@@ -15,30 +15,6 @@ class helpers {
 		}
 		return $ip;
 	}
-	static function route($controller = "", $action = "", $array = array(), $with = false) {
-		include ("./routes.php");
-		$inputvars = array('controller' => $controller, 'action' => $action) + $array;
-		foreach ($routes as $route) {
-			preg_match_all('/{(.*?)}/', $route['string'], $routevarsnoval);
-			$routevarsval = $route;
-			unset($routevarsval['string']);
-			if (array_intersect($routevarsval, $inputvars) == $routevarsval) {
-				$left = array_diff_assoc($inputvars, $routevarsval);
-				$leftkeys = array_keys($left);
-				$novalkeys = $routevarsnoval[1];
-				if ($novalkeys == $leftkeys) {
-					$ret = $route;
-					break;
-				}
-			}
-		}
-		if (isset($ret))
-			foreach ($inputvars as $key => $newvar) {
-				$ret['string'] = str_replace('{' . $key . '}', $newvar, $ret['string']);
-			}
-		
-		return (isset($ret)) ? $with?'/'.$ret['string'].'.html':$ret['string'] : "";
-	}
 
 	static function getlocation($arr) {
 

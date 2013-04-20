@@ -28,6 +28,7 @@ class hEtml {
 		return $text;
 	}
 	private static function linkto($params, $var) {
+		$format = isset($params['format'])? $params['format'] : null;
 		$_add = explode(',', $params['code']);
 		$add = array();
 		foreach ($_add as $vals) {
@@ -38,7 +39,7 @@ class hEtml {
 			unset($ad[0]);
 			$add[$key] = implode('=>', $ad);
 		}
-		return Routes::get($params['controller'], $params['action'], $add);
+		return "/".Routes::get($params['controller'], $params['action'], $add, $format);
 	}
 
 	private static function date($params, $vars) {
