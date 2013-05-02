@@ -19,7 +19,6 @@ class hEtml {
 			$compiled = preg_match_all($regexpr, $text, $values);
 			$params = array();
 			if ($compiled) {
-
 				for ($i = 0; $i < count($values[0]); $i++) {
 					$text = str_replace($values[0][$i], self::$method(self::get_params($function, $values[0][$i], $end), $vars, $values[0][$i]), $text);
 				}
@@ -27,9 +26,11 @@ class hEtml {
 		}
 		return $text;
 	}
+
 	private static function linkto($params, $var) {
-		$format = isset($params['format'])? $params['format'] : null;
-		$_add = explode(',', $params['code']);
+		$format = isset($params['format']) ? $params['format'] : null;
+		$code = isset($params['code']) ? $params['code'] : "";
+		$_add = explode(',', $code);
 		$add = array();
 		foreach ($_add as $vals) {
 			$ad = explode('=>', trim($vals));
@@ -37,9 +38,16 @@ class hEtml {
 				continue;
 			$key = $ad[0];
 			unset($ad[0]);
-			$add[$key] = implode('=>', $ad);
+			$vlue = implode('=>', $ad);
+			if (preg_match_all("/^_([\w0-9]+)$/", $vlue, $results)) {
+				if (isset($var[$results[1][0]])) {
+					$vlue = $var[$results[1][0]];
+				}
+			}
+			$add[$key] = $vlue;
+
 		}
-		return "/".Routes::get($params['controller'], $params['action'], $add, $format);
+		return "/" . Routes::get($params['controller'], $params['action'], $add, $format);
 	}
 
 	private static function date($params, $vars) {
@@ -49,19 +57,38 @@ class hEtml {
 			return Module::date($params['var']);
 	}
 
+	private static function substr($params, $vars, $l) {
+		if (isset($vars[$params['var']])) {
+			if (isset($params['s'])) {
+				if(is_numeric($params['s']) and is_numeric($params['f'])){
+					return substr($vars[$params['var']], (int)$params['f'], (int)$params['s']);
+				}else{
+					return $l;
+				}
+			}else{
+				if(is_numeric($params['f'])){
+					return substr($vars[$params['var']], (int)$params['f']);
+				}else{
+					return $l;
+				}	
+			}
+		}else return $l;
+
+	}
+
 	private static function render($params, $vars, $l) {
 		$var = $params['var'];
-		$file = './../render/'.$params['file'].'.html';
+		$file = './../render/' . $params['file'] . '.html';
 		$return = "";
-		if(isset($vars[$var]) and is_array($vars[$var])){
-			foreach($vars[$var] as $_var){
+		if (isset($vars[$var]) and is_array($vars[$var])) {
+			foreach ($vars[$var] as $_var) {
 				$return .= self::quote(self::fromFile($file, (array)$_var));
 			}
-			return $return;
-		}else{	
+			return self::compile($return, $vars);
+		} else {
 			return $l;
 		}
-		
+
 	}
 
 	private static function eachs($params, $vars, $l) {
@@ -124,18 +151,22 @@ class hEtml {
 	private static function repeat($params) {
 		return str_repeat($params['code'], $params['times']);
 	}
-	private static function stylesheet($params){
-		return '<link type="text/css" rel="stylesheet" href="/'.$params['name'].'.css"></script>';
+
+	private static function stylesheet($params) {
+		return '<link type="text/css" rel="stylesheet" href="/' . $params['name'] . '.css"></script>';
 	}
+
 	private static function variable($params, $vars, $l) {
 		if (isset($vars[$params['var']]) && (is_numeric($vars[$params['var']]) or is_string($vars[$params['var']])))
 			return $vars[$params['var']];
-		else 
+		else
 			return $l;
 	}
-	private static function quote($text){
+
+	private static function quote($text) {
 		return str_replace("%", "&#37", $text);
 	}
+
 	private static function get_params($function, $text, $end) {
 		$i = preg_match_all("/{([0-9\w]+?)}/", $function, $results);
 		$return = array();
