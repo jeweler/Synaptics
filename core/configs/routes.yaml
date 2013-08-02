@@ -1,0 +1,13 @@
+-string: 'admin/deletecloth/{id:num}'
+  data:
+    controller: 'admin'
+    action: 'clothDel'
+-string: 'admin/editcloth/{id:num}'
+  data:
+    controller: 'admin'
+    action: 'clothEdit'
+-string: '{action:type}'
+  data:
+    controller: 'index'
+-string: '{controller}/{action}'
+root: 'index'

@@ -1,0 +1,12 @@
+.model{
+    width: 219px;
+    text-align: center;
+    float:left;
+    margin-right: 30px;
+}
+.nodisplay{
+    display:none;
+}
+input[type=file]{
+    width: 219px;
+}

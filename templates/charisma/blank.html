@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>%title%</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    <link id="bs-css" href="/charisma/bootstrap-cerulean.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+    <link href="/charisma/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/charisma/charisma-app.css" rel="stylesheet">
+    <link href="/charisma/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+    <link href='/charisma/fullcalendar.css' rel='stylesheet'>
+    <link href='/charisma/fullcalendar.print.css' rel='stylesheet' media='print'>
+    <link href='/charisma/chosen.css' rel='stylesheet'>
+    <link href='/charisma/uniform.default.css' rel='stylesheet'>
+    <link href='/charisma/colorbox.css' rel='stylesheet'>
+    <link href='/charisma/jquery.cleditor.css' rel='stylesheet'>
+    <link href='/charisma/jquery.noty.css' rel='stylesheet'>
+    <link href='/charisma/noty_theme_default.css' rel='stylesheet'>
+    <link href='/charisma/elfinder.min.css' rel='stylesheet'>
+    <link href='/charisma/elfinder.theme.css' rel='stylesheet'>
+    <link href='/charisma/jquery.iphone.toggle.css' rel='stylesheet'>
+    <link href='/charisma/opa-icons.css' rel='stylesheet'>
+    <link href='/charisma/uploadify.css' rel='stylesheet'>
+    <script src="/charisma/jquery.js"></script>
+    <script src="/charisma/jquery-ui-1.8.21.custom.min.js"></script>
+    <script src="/charisma/bootstrap-transition.js"></script>
+    <script src="/charisma/bootstrap-alert.js"></script>
+    <script src="/charisma/bootstrap-modal.js"></script>
+    <script src="/charisma/bootstrap-dropdown.js"></script>
+    <script src="/charisma/bootstrap-scrollspy.js"></script>
+    <script src="/charisma/bootstrap-tab.js"></script>
+    <script src="/charisma/bootstrap-tooltip.js"></script>
+    <script src="/charisma/bootstrap-popover.js"></script>
+    <script src="/charisma/bootstrap-button.js"></script>
+    <script src="/charisma/bootstrap-collapse.js"></script>
+    <script src="/charisma/bootstrap-carousel.js"></script>
+    <script src="/charisma/bootstrap-typeahead.js"></script>
+    <script src="/charisma/bootstrap-tour.js"></script>
+    <script src="/charisma/jquery.cookie.js"></script>
+    <script src='/charisma/fullcalendar.min.js'></script>
+    <script src='/charisma/jquery.dataTables.min.js'></script>
+    <script src='/charisma/jquery.dataTables.columnFilter.js'></script>
+    <script src="/charisma/excanvas.js"></script>
+    <script src="/charisma/jquery.flot.min.js"></script>
+    <script src="/charisma/jquery.flot.pie.min.js"></script>
+    <script src="/charisma/jquery.flot.stack.js"></script>
+    <script src="/charisma/jquery.flot.resize.min.js"></script>
+    <script src="/charisma/jquery.chosen.min.js"></script>
+    <script src="/charisma/jquery.uniform.min.js"></script>
+    <script src="/charisma/jquery.colorbox.min.js"></script>
+    <script src="/charisma/jquery.cleditor.min.js"></script>
+    <script src="/charisma/jquery.noty.js"></script>
+    <script src="/charisma/jquery.elfinder.min.js"></script>
+    <script src="/charisma/jquery.raty.min.js"></script>
+    <script src="/charisma/jquery.iphone.toggle.js"></script>
+    <script src="/charisma/jquery.autogrow-textarea.js"></script>
+    <script src="/charisma/jquery.uploadify-3.1.min.js"></script>
+    <script src="/charisma/jquery.history.js"></script>
+    %addjs%
+    %addcss%
+    %add%
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+</head>
+
+<body>
+<!-- topbar starts -->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse"
+               data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse"> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> </a>
+            <a class="brand" href="index.html"> <img alt="Charisma Logo" src="/img/logo20.png"/>
+                <span>Admin-Panel</span></a>
+        </div>
+    </div>
+</div>
+<!-- topbar ends -->
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <!-- left menu starts -->
+        <div class="span2 main-menu-span">
+            <div class="well nav-collapse sidebar-nav">
+                <ul class="nav nav-tabs nav-stacked main-menu">
+
+                    <li>
+                        <a class="ajax-link" href="%linkto(admin,index)%%end%"><i class="icon-user"></i><span
+                                class="hidden-tablet"> Главная</span></a>
+                    </li>
+                    <li>
+                        <a class="ajax-link" href="%linkto(admin,icons)%%end%"><i class="icon-star"></i><span
+                                class="hidden-tablet"> Иконки</span></a>
+                    </li>
+                    <li>
+                        <a class="ajax-link" href="%linkto(admin,caths)%%end%"><i class="icon-th-large"></i><span
+                                class="hidden-tablet"> Альбомы</span></a>
+                    </li>
+                    <li>
+                        <a class="ajax-link" href="%linkto(admin,photos)%%end%"><i class="icon-picture"></i><span
+                                class="hidden-tablet"> Фотки</span></a>
+                    </li>
+                    <li>
+                        <a class="ajax-link" href="%linkto(index,index)%%end%"><i class="icon-home"></i><span
+                                class="hidden-tablet"> На сайт</span></a>
+                    </li>
+                    <li>
+                        <a class="ajax-link" href="%linkto(admin, logout)%%end%"><i class="icon-off"></i><span
+                                class="hidden-tablet"> Выход</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="content" class="span10">
+            <div>
+                <ul class="breadcrumb">
+                    %position%
+                </ul>
+            </div>
+
+            %content%
+
+            <!-- content ends -->
+        </div>
+    </div>
+    <!--/fluid-row-->
+
+    <hr>
+
+
+</div>
+<script src="/charisma/charisma.js"></script>
+<script type="text/javascript">
+    var flash = '%flash%';
+    if (flash.length > 0) {
+        if ((dev = flash.split('-')).length > 1) {
+           if(dev[0] == 'error'){
+               noty({"text":dev.splice(1).join('-'),"layout":"topRight","type":"error"})
+           }else if(dev[0] == 'success'){
+               noty({"text":dev.splice(1).join('-'),"layout":"topRight","type":"success"})
+           }else{
+               noty({"text":dev.join('-'),"layout":"topRight","type":"alert"})
+           }
+        }else{
+            noty({"text":dev.join('-'),"layout":"topRight","type":"alert"})
+        }
+    }
+</script>
+</body>
+</html>

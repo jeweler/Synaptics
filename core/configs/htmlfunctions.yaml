@@ -1,0 +1,28 @@
+- function : '% render ( {file}, {var} ) %'
+  method : 'render'
+- function : '% render ( {var} ) %'
+  method : 'renders'
+  end : true
+- function : '% repeat ( {times} ) %'
+  method: 'repeat'
+  end : true
+- function: '% each ( {var} ) %'
+  method: 'eachs'
+  end : true
+- function : '% if ( {cond} ) %'
+  method : ifcond
+  end : true
+- function : '% date ( {var} ) %'
+  method : 'date'
+- function : '% linkto ( {controller} , {action} , {format}) %'
+  end: true
+  method: 'linkto'
+- function : '% linkto ( {controller}, {action} ) %'
+  end: true
+  method: 'linkto'
+- function : '% linkto ( {controller}, {action} ) %'
+  method: 'linkto'
+- function: '% stylesheet {name} %'
+  method: 'stylesheet'
+- function : '% {var} %'
+  method : 'variable'

@@ -1,0 +1,12 @@
+.color {
+    margin: 0 auto;
+    border-radius: 50px;
+    background-color: black;
+    text-align: center;
+    width: 10px;
+    height: 10px;
+    float: left;
+    margin-right: 5px;
+    display: inline-block;
+    border: 1px solid #7b7b7b;
+}

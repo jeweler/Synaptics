@@ -1,0 +1,10 @@
+mysql_conn:
+  host: 'localhost'
+  port: 3306
+  user: 'root'
+  password: 'lewejer'
+  db: 'danil'
+status: debug  #release/debug
+sitedir: '/srv/domains/danil/'
+domain: 'http://127.0.0.1/'
+
